@@ -5,9 +5,9 @@
   <subtitle>一个人的命运啊，当然要靠自我奋斗。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://www.charleywang.xyz/"/>
   <updated>2019-04-07T13:39:32.603Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://www.charleywang.xyz/</id>
   
   <author>
     <name>Charley Wang</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2019/04/07/hello-world/"/>
-    <id>http://yoursite.com/2019/04/07/hello-world/</id>
+    <link href="http://www.charleywang.xyz/2019/04/07/hello-world/"/>
+    <id>http://www.charleywang.xyz/2019/04/07/hello-world/</id>
     <published>2019-04-07T09:29:31.982Z</published>
     <updated>2019-04-07T13:39:32.603Z</updated>
     
@@ -31,12 +31,12 @@
     
     </summary>
     
-      <category term="Blog" scheme="http://yoursite.com/categories/Blog/"/>
+      <category term="Blog" scheme="http://www.charleywang.xyz/categories/Blog/"/>
     
-      <category term="Hexo" scheme="http://yoursite.com/categories/Blog/Hexo/"/>
+      <category term="Hexo" scheme="http://www.charleywang.xyz/categories/Blog/Hexo/"/>
     
     
-      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://www.charleywang.xyz/tags/Hexo/"/>
     
   </entry>
   
