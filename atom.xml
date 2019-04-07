@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Charley&#39;s Blog</title>
   
-  
+  <subtitle>一个人的命运啊，当然要靠自我奋斗。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
