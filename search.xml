@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Exercise On Leetcode]]></title>
+    <url>%2F2019%2F04%2F11%2FExercise-On-Leetcode%2F</url>
+    <content type="text"><![CDATA[Record my thoughts and solutions to the problems on leetcode. Depth-first SearchEasyleetcode-100思路：判断两颗树相同需两个条件： 当前节点值相同 左子树相同且右子树相同 基于此和树的递归数据结构容易写出递归程序解决该问题。时间复杂度:&emsp;&emsp;O(N) &emsp;//每个节点访问一次空间复杂度:&emsp;&emsp;最好: O(log(N)) (完全平衡二叉树)&emsp;&emsp;最坏: O(N) (退化为链表) &emsp;//N为维护递归栈的深度 代码：c++:123456789101112131415161718192021/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: bool isSameTree(TreeNode* p, TreeNode* q) &#123; if(p==NULL &amp;&amp; q==NULL) return true; if(p==NULL || q==NULL) return false; if(p-&gt;val == q-&gt;val)&#123; return isSameTree(p-&gt;left,q-&gt;left) &amp;&amp; isSameTree(p-&gt;right,q-&gt;right); &#125;else&#123; return false; &#125; &#125;&#125;; python:12345678910111213141516# Definition for a binary tree node.# class TreeNode:# def __init__(self, x):# self.val = x# self.left = None# self.right = Noneclass Solution: def isSameTree(self, p: TreeNode, q: TreeNode) -&gt; bool: if p==None and q==None: return True if p==None or q==None: return False if p.val == q.val: return self.isSameTree(p.right,q.right) and self.isSameTree(p.left,q.left) else: return False]]></content>
+      <categories>
+        <category>algorithm and data structure</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2019%2F04%2F07%2Fhello-world%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
