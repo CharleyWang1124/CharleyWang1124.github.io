@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.charleywang.xyz/"/>
-  <updated>2019-04-18T03:39:59.983Z</updated>
+  <updated>2019-04-26T15:30:53.722Z</updated>
   <id>http://www.charleywang.xyz/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scrapy分布式爬虫打造搜索引擎（一）——环境配置</title>
+    <link href="http://www.charleywang.xyz/2019/04/26/scrapy%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB%E6%89%93%E9%80%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <id>http://www.charleywang.xyz/2019/04/26/scrapy分布式爬虫打造搜索引擎（一）——环境配置/</id>
+    <published>2019-04-26T15:26:09.000Z</published>
+    <updated>2019-04-26T15:30:53.722Z</updated>
+    
+    <content type="html"><![CDATA[<p></p><p align="center">开始打造我们的搜索引擎前，先来配置好我们的环境吧！</p><br><a id="more"></a><p></p><h3 id="开发环境搭建"><a href="#开发环境搭建" class="headerlink" title="开发环境搭建"></a>开发环境搭建</h3><ol><li>IDE — pycharm</li><li>数据库 — mysql、redis、elasticsearch</li><li>开发环境 — virtualenv</li></ol><h4 id="pycharm的安装和使用"><a href="#pycharm的安装和使用" class="headerlink" title="pycharm的安装和使用"></a>pycharm的安装和使用</h4><ol><li><a href="https://www.jetbrains.com/pycharm/download/#section=windows" target="_blank" rel="noopener">官网</a>安装pycharm(<strong>Professional</strong>)</li><li>使用license server激活pycharm(可参考<a href="https://zhile.io/2018/08/25/jetbrains-license-server-crack.html" target="_blank" rel="noopener">Jetbrains系列产品2019.1.1最新激活方法</a>)</li><li>打开pycharm，在File-Settings下设置熟悉的keymap和相应的interpreter</li></ol><h4 id="mysql和navicat的安装和使用"><a href="#mysql和navicat的安装和使用" class="headerlink" title="mysql和navicat的安装和使用"></a>mysql和navicat的安装和使用</h4><ol><li><a href="https://www.mysql.com/downloads/" target="_blank" rel="noopener">官网</a>安装对应系统的mysql (note:记住用户名和密码，后面连接数据库时要用到)</li><li>安装navicate，网上破解方法很多，这里不再赘述</li><li>命令行下启动mysql  <code>mysql -uroot -p</code></li><li>远程访问数据库：linux下修改mysql配置文件 <code>sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf</code><br>（windows下的配置文件为my.ini）修改其中的bind-address为0.0.0.0(默认为127.0.0.1，即本地) </li><li>设置权限,使所有root用户都可以访问数据库,有两条命令<br> <code>GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;root&#39; WITH GRANT OPTION;</code>和<code>flush privileges;</code></li><li>打开navicat，连接mysql后，新建数据库时注意字符集选择<strong>utf8</strong>（否则会出现中文乱码），排序规则选择<strong>utf8_general_ci</strong></li></ol><h4 id="虚拟环境的安装和配置"><a href="#虚拟环境的安装和配置" class="headerlink" title="虚拟环境的安装和配置"></a>虚拟环境的安装和配置</h4><p>不同项目的环境配置不一样，使用虚拟环境可以很好地解决这个问题。<br><code>pip install virtualenv</code>  /<code>pip install virtualenvwrapper</code>用virualenv和virtualenvwrapper可以很好地进行虚拟环境地配置，具体使用可参考网上教程。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;开始打造我们的搜索引擎前，先来配置好我们的环境吧！&lt;/p&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.charleywang.xyz/categories/python/"/>
+    
+    
+      <category term="spider" scheme="http://www.charleywang.xyz/tags/spider/"/>
+    
+      <category term="python" scheme="http://www.charleywang.xyz/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>二叉树的遍历(递归和迭代的C++实现)</title>
