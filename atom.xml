@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.charleywang.xyz/"/>
-  <updated>2019-05-02T16:03:36.263Z</updated>
+  <updated>2019-05-02T16:31:10.990Z</updated>
   <id>http://www.charleywang.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scrapy分布式爬虫打造搜索引擎（三）—— scrapy爬虫实战</title>
+    <link href="http://www.charleywang.xyz/2019/05/03/scrapy%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB%E6%89%93%E9%80%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94-scrapy%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98/"/>
+    <id>http://www.charleywang.xyz/2019/05/03/scrapy分布式爬虫打造搜索引擎（三）——-scrapy爬虫实战/</id>
+    <published>2019-05-02T16:09:07.000Z</published>
+    <updated>2019-05-02T16:31:10.990Z</updated>
+    
+    <content type="html"><![CDATA[<p></p><p align="center">爬虫首战之爬取<a href="blog.jobbole.com">文章-伯乐在线</a>上的文章及封面图</p><br><a id="more"></a><p></p><h3 id="制定爬取策略"><a href="#制定爬取策略" class="headerlink" title="制定爬取策略"></a>制定爬取策略</h3><ol><li>通过观察文章页面的网页结构，我们点开最新文章标签，发现它提供了所有文章的url，这样就不需要通过深度优先或广度优先的方法去爬取。</li><li>因为以后文章数会增加，因此页数也会相应地增加，为了我们地爬取代码能自适应增加内容，我们可以通过下一页来获取每页上的文章内容，而不是通过某个具体的页数来爬取。</li></ol><h3 id="爬取提示"><a href="#爬取提示" class="headerlink" title="爬取提示"></a>爬取提示</h3><ol><li>在pycharm中建立项目，我用的是anaconda的python解释器，通过anaconda prompt进入项目目录，<code>scrapy startproject [目录名]</code>即在项目目录下建立了scrapy框架。</li><li>在项目目录下建立main.py文件方便以后调试爬虫</li><li>修改settings.py下<code>ROBOTSTXT_OBEY = False</code>(否则scrapy会默认过滤掉不符合ROBOTS协议的url)</li><li>这里有个坑，<code>scrapy crawl [爬虫文件名]</code>必须cd到有scrapy.cfg那个目录下才能执行，否则会报错<code>Unknown command: crawl</code>   参见<a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/commands.html" target="_blank" rel="noopener">官网:命令行工具(Command line tools)</a></li><li>pycharm下在根目录下还是会出现<code>Unknown command: crawl</code> ,解决办法参见<a href="https://blog.csdn.net/HuaCode/article/details/79429383" target="_blank" rel="noopener">该篇博客中的第二种方法</a>,即把scrapy.cfg移到项目根目录外</li><li>scrapy爬取的是未加载js之前的html</li><li>调试技巧，在命令行下运行<code>scrapy shell [url]</code></li><li>scrapy提供了xpath和css选择器两种方法提前html中的相应字段,也可以使用scrapy.loader中的itemloader</li><li>scrapy提供了exporter模块可以很方便地将item导出成各种格式的文件，如xml，json，csv等</li><li>使用 <code>from twisted.enterprise import adbapi</code>可以将mysql的插入操作变成异步操作，因为常规使用pymysql的cursor的话是跟不上爬虫的解析速度的</li></ol><h3 id="爬取过程"><a href="#爬取过程" class="headerlink" title="爬取过程"></a>爬取过程</h3><ol><li>在anaconda prompt中cd到保存爬虫项目的根目录，输入scrapy startproject<br>article_spider，即在当前目录下生成了一个scrapy项目的框架。</li><li>根据提示，再cd到刚刚生成的项目目录下，输入<code>scrapy genspider jobbole http://blog.jobbole.com/all-posts/</code>后，scrapy即帮我们在article_spider\spiders\文件夹下生成了一个jobbole.py的文件，这个文件用于编写我们的后续爬虫逻辑。</li><li>为了便于调试，我们首先在项目目录下建立一个main.py文件，内容如下：</li></ol><p><img src="https://i.loli.net/2019/05/03/5ccb19fb401d2.png" alt></p><ol start="4"><li>修改settings.py中的ROBOTSTXT_OBEY为False，否则在后续爬取过程中它会自动过滤掉一些不符合这个规则的url</li><li>接着在jobbole.py下编写我们的爬虫逻辑，主要分为两大部分：</li></ol><ul><li>获取文章列表页中每篇文章的url并交给scrapy进行下载后并进行解析<br><img src="https://i.loli.net/2019/05/03/5ccb19fb5e1c6.png" alt></li><li>获取下一页的url并交给scrapy进行下载，下载完成后交给parse<br><img src="/scrapy分布式爬虫打造搜索引擎（三）——-scrapy爬虫实战/530_1.png" alt></li></ul><ol start="6"><li>接着继续在jobbole.py下编写具体解析一篇文章的函数parse_detail，大致工作分为如下几部分:</li></ol><ul><li><p>通过css选择器提取字段，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fb418eb.png" alt></p></li><li><p>对于某些内容，我们只能提取到它的字符串，而实际上我们需要的只是其中的那个数字，这时我们就需要使用正则表达式去匹配我们需要提前的数字，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fb5abea.png" alt></p></li><li>对提取到的字段做一些规范性处理，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fbb62ef.png" alt></li></ul><ol start="7"><li>在提取完所有的字段并都对它们进行了规范性处理后，我们在items.py中建立一个class来生成这些字段，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fbed320.png" alt><br>并在jobbole.py中实例化这个class，并对每个字段赋上面我们规范化处理后的值，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fbde931.png" alt></li><li>生成item之后，我们考虑将这些数据持久化，保存到关系型数据库mysql中，这可以通过scrapy提供的pipline轻松完成，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fc11106.png" alt></li></ol><h3 id="爬取结果"><a href="#爬取结果" class="headerlink" title="爬取结果"></a>爬取结果</h3><ol><li>将文章爬取的封面图保存到了article_spider\images\full下，如：<br><img src="https://i.loli.net/2019/05/03/5ccb19fc1918f.png" alt></li><li>将爬取到的文章内容保存到了mysql关系型数据库中，如：<br><img src="https://i.loli.net/2019/05/03/5ccb1a0b2da2e.png" alt></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;爬虫首战之爬取&lt;a href=&quot;blog.jobbole.com&quot;&gt;文章-伯乐在线&lt;/a&gt;上的文章及封面图&lt;/p&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://www.charleywang.xyz/categories/python/"/>
+    
+    
+      <category term="spider" scheme="http://www.charleywang.xyz/tags/spider/"/>
+    
+      <category term="python" scheme="http://www.charleywang.xyz/tags/python/"/>
+    
+      <category term="scrapy" scheme="http://www.charleywang.xyz/tags/scrapy/"/>
+    
+  </entry>
   
   <entry>
     <title>scrapy分布式爬虫打造搜索引擎（二）——基础知识</title>
