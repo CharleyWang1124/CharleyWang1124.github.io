@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.charleywang.top/"/>
-  <updated>2019-05-03T00:29:28.247Z</updated>
+  <updated>2020-01-02T17:00:08.165Z</updated>
   <id>http://www.charleywang.top/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何使用leela zero进行围棋训练</title>
+    <link href="http://www.charleywang.top/2020/01/03/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8leela-zero%E8%BF%9B%E8%A1%8C%E5%9B%B4%E6%A3%8B%E8%AE%AD%E7%BB%83/"/>
+    <id>http://www.charleywang.top/2020/01/03/如何使用leela-zero进行围棋训练/</id>
+    <published>2020-01-02T16:57:03.000Z</published>
+    <updated>2020-01-02T17:00:08.165Z</updated>
+    
+    <content type="html"><![CDATA[<p align="center">关于一个强大的开源围棋AI的环境搭建</p><a id="more"></a><h4 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h4><p><a href="zero.sjeng.org">leela zero官方网站</a><br><a href="https://hhpetra.github.io/leelachinese/index" target="_blank" rel="noopener">leela zero中文网站</a><br><a href="https://github.com/leela-zero/leela-zero" target="_blank" rel="noopener">leela zero GitHub</a></p><h4 id="leela-zero简介"><a href="#leela-zero简介" class="headerlink" title="leela zero简介"></a>leela zero简介</h4><p><a href="https://zh.wikipedia.org/wiki/Leela_Zero" target="_blank" rel="noopener">leela zero</a>是由比利时程序员Gian-Carlo_Pascutto 对 <a href="https://deepmind.com/blog/article/alphago-zero-starting-scratch" target="_blank" rel="noopener">AlphaGo zero</a> 的论文 <a href="https://www.nature.com/articles/nature24270.epdf?author_access_token=VJXbVjaSHxFoctQQ4p2k4tRgN0jAjWel9jnR3ZoTv0PVW4gB86EEpGqTRDtpIz-2rmo8-KG06gqVobU5NSCFeHILHcVFUeMsbvwS-lxjqQGg98faovwjxeTUgZAUMnRQ" target="_blank" rel="noopener">Mastering the game of Go without human knowledge（无须人类知识掌握围棋）</a>中内容的开源实现。</p><h4 id="人机对弈环境搭建"><a href="#人机对弈环境搭建" class="headerlink" title="人机对弈环境搭建"></a>人机对弈环境搭建</h4><p>根据<a href="https://github.com/leela-zero/leela-zero" target="_blank" rel="noopener">leela zero github</a>的README中的指示<br>如果<strong>想用自己的硬件帮助训练增强Leela zero</strong>，可前往<a href="https://github.com/leela-zero/leela-zero/releases" target="_blank" rel="noopener">此处</a>下载一个自动训练的程序AutoGTP，它将自动地连接服务器并在后台进行它的工作，在每次训练后上传结果，若想停止训练只需要关闭窗口即可。另外再说一句，我们还可以通过诸如谷歌和微软等大公司提供的云计算服务来帮助leela zero这个项目。<br>如果<strong>只是想和它进行对弈</strong>，那么你需要三样东西：一个是<u><strong>引擎</strong></u>，相当于leela zero的身体，在<a href="https://github.com/leela-zero/leela-zero/releases" target="_blank" rel="noopener">此处</a>下载；另一个是<u><strong>权重文件</strong></u>，相当于leela zero的大脑，在<a href="http://zero.sjeng.org/" target="_blank" rel="noopener">官网</a>上的最下面Best Network Hash的表中我们可以选取最新的权重文件下载，应该说最新的也代表着目前的最强版本（从旁边的Test Matches的表中，我们似乎可以看出它是通过两个权重文件进行自对弈，当新的权重文件胜率超过55%就替换老版本）；最后一个是<u><strong>图形化界面</strong></u>，相当于给leela zero穿的衣服，这里我选择了具有好看的界面的<a href="https://sabaki.yichuanshen.de/" target="_blank" rel="noopener">Sabaki</a>。</p><p><strong>为Sabaki设置leela zero的引擎</strong><br>点击Sabaki界面的Engines菜单栏中的Manage Engines，下方出现一个界面后点击add添加引擎。点击小文件夹图标，找到之前下载的leelaz.exe引擎所在的路径，后面需要设置相关参数（根据个人的硬件配置来设置），具体可参考<a href="https://hhpetra.github.io/leelachinese/tutorials/arguments.html" target="_blank" rel="noopener">leela zero参数及解释</a>。这里我的参数设置如下：-g -t4 -w 40b_257a_64k_q –noponder –playouts 3000(这里-w后的文件名即为之前下载的权重文件，需要将其放到leela zero的文件夹下)；initial commands命令如下：time_settings 0 20 1(意为每步棋leela zero思考20s)</p><h4 id="复盘分析环境搭建"><a href="#复盘分析环境搭建" class="headerlink" title="复盘分析环境搭建"></a>复盘分析环境搭建</h4><p>Lizzie是一个使用户能够用leela zero进行实时分析的图形化界面的软件 <a href="https://github.com/featurecat/lizzie" target="_blank" rel="noopener">github地址</a><br>在Lizzie的基础上添加了一些个性化的功能 <a href="https://github.com/aerisnju/mylizzie" target="_blank" rel="noopener">github地址</a></p><p><strong>运行Lizzle</strong>：在安装的文件夹下进入命令行（windows用户可shift+右键进入powershell）输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar &quot;你的安装路径\lizzie.jar&quot;</span><br></pre></td></tr></table></figure></p><p>就会弹出lizzle的图形化界面了，开始你的棋艺探索之旅吧！</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p align=&quot;center&quot;&gt;关于一个强大的开源围棋AI的环境搭建&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="AI" scheme="http://www.charleywang.top/categories/AI/"/>
+    
+    
+      <category term="围棋" scheme="http://www.charleywang.top/tags/%E5%9B%B4%E6%A3%8B/"/>
+    
+      <category term="AI" scheme="http://www.charleywang.top/tags/AI/"/>
+    
+  </entry>
   
   <entry>
     <title>scrapy分布式爬虫打造搜索引擎（三）—— scrapy爬虫实战</title>

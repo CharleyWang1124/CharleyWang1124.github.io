@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[如何使用leela zero进行围棋训练]]></title>
+    <url>%2F2020%2F01%2F03%2F%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8leela-zero%E8%BF%9B%E8%A1%8C%E5%9B%B4%E6%A3%8B%E8%AE%AD%E7%BB%83%2F</url>
+    <content type="text"><![CDATA[关于一个强大的开源围棋AI的环境搭建 参考地址leela zero官方网站leela zero中文网站leela zero GitHub leela zero简介leela zero是由比利时程序员Gian-Carlo_Pascutto 对 AlphaGo zero 的论文 Mastering the game of Go without human knowledge（无须人类知识掌握围棋）中内容的开源实现。 人机对弈环境搭建根据leela zero github的README中的指示如果想用自己的硬件帮助训练增强Leela zero，可前往此处下载一个自动训练的程序AutoGTP，它将自动地连接服务器并在后台进行它的工作，在每次训练后上传结果，若想停止训练只需要关闭窗口即可。另外再说一句，我们还可以通过诸如谷歌和微软等大公司提供的云计算服务来帮助leela zero这个项目。如果只是想和它进行对弈，那么你需要三样东西：一个是引擎，相当于leela zero的身体，在此处下载；另一个是权重文件，相当于leela zero的大脑，在官网上的最下面Best Network Hash的表中我们可以选取最新的权重文件下载，应该说最新的也代表着目前的最强版本（从旁边的Test Matches的表中，我们似乎可以看出它是通过两个权重文件进行自对弈，当新的权重文件胜率超过55%就替换老版本）；最后一个是图形化界面，相当于给leela zero穿的衣服，这里我选择了具有好看的界面的Sabaki。 为Sabaki设置leela zero的引擎点击Sabaki界面的Engines菜单栏中的Manage Engines，下方出现一个界面后点击add添加引擎。点击小文件夹图标，找到之前下载的leelaz.exe引擎所在的路径，后面需要设置相关参数（根据个人的硬件配置来设置），具体可参考leela zero参数及解释。这里我的参数设置如下：-g -t4 -w 40b_257a_64k_q –noponder –playouts 3000(这里-w后的文件名即为之前下载的权重文件，需要将其放到leela zero的文件夹下)；initial commands命令如下：time_settings 0 20 1(意为每步棋leela zero思考20s) 复盘分析环境搭建Lizzie是一个使用户能够用leela zero进行实时分析的图形化界面的软件 github地址在Lizzie的基础上添加了一些个性化的功能 github地址 运行Lizzle：在安装的文件夹下进入命令行（windows用户可shift+右键进入powershell）输入1java -jar &quot;你的安装路径\lizzie.jar&quot; 就会弹出lizzle的图形化界面了，开始你的棋艺探索之旅吧！]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>围棋</tag>
+        <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[scrapy分布式爬虫打造搜索引擎（三）—— scrapy爬虫实战]]></title>
     <url>%2F2019%2F05%2F03%2Fscrapy%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB%E6%89%93%E9%80%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94-scrapy%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98%2F</url>
     <content type="text"><![CDATA[爬虫首战之爬取文章-伯乐在线上的文章及封面图 制定爬取策略 通过观察文章页面的网页结构，我们点开最新文章标签，发现它提供了所有文章的url，这样就不需要通过深度优先或广度优先的方法去爬取。 因为以后文章数会增加，因此页数也会相应地增加，为了我们地爬取代码能自适应增加内容，我们可以通过下一页来获取每页上的文章内容，而不是通过某个具体的页数来爬取。 爬取提示 在pycharm中建立项目，我用的是anaconda的python解释器，通过anaconda prompt进入项目目录，scrapy startproject [目录名]即在项目目录下建立了scrapy框架。 在项目目录下建立main.py文件方便以后调试爬虫 修改settings.py下ROBOTSTXT_OBEY = False(否则scrapy会默认过滤掉不符合ROBOTS协议的url) 这里有个坑，scrapy crawl [爬虫文件名]必须cd到有scrapy.cfg那个目录下才能执行，否则会报错Unknown command: crawl 参见官网:命令行工具(Command line tools) pycharm下在根目录下还是会出现Unknown command: crawl ,解决办法参见该篇博客中的第二种方法,即把scrapy.cfg移到项目根目录外 scrapy爬取的是未加载js之前的html 调试技巧，在命令行下运行scrapy shell [url] scrapy提供了xpath和css选择器两种方法提前html中的相应字段,也可以使用scrapy.loader中的itemloader scrapy提供了exporter模块可以很方便地将item导出成各种格式的文件，如xml，json，csv等 使用 from twisted.enterprise import adbapi可以将mysql的插入操作变成异步操作，因为常规使用pymysql的cursor的话是跟不上爬虫的解析速度的 爬取过程 在anaconda prompt中cd到保存爬虫项目的根目录，输入scrapy startproject article_spider，即在当前目录下生成了一个scrapy项目的框架。 根据提示，再cd到刚刚生成的项目目录下，输入scrapy genspider jobbole http://blog.jobbole.com/all-posts/后，scrapy即帮我们在article_spider\spiders\文件夹下生成了一个jobbole.py的文件，这个文件用于编写我们的后续爬虫逻辑。 为了便于调试，我们首先在项目目录下建立一个main.py文件，内容如下： 修改settings.py中的ROBOTSTXT_OBEY为False，否则在后续爬取过程中它会自动过滤掉一些不符合这个规则的url 接着在jobbole.py下编写我们的爬虫逻辑，主要分为两大部分： 获取文章列表页中每篇文章的url并交给scrapy进行下载后并进行解析 获取下一页的url并交给scrapy进行下载，下载完成后交给parse 接着继续在jobbole.py下编写具体解析一篇文章的函数parse_detail，大致工作分为如下几部分: 通过css选择器提取字段，如： 对于某些内容，我们只能提取到它的字符串，而实际上我们需要的只是其中的那个数字，这时我们就需要使用正则表达式去匹配我们需要提前的数字，如： 对提取到的字段做一些规范性处理，如： 在提取完所有的字段并都对它们进行了规范性处理后，我们在items.py中建立一个class来生成这些字段，如：并在jobbole.py中实例化这个class，并对每个字段赋上面我们规范化处理后的值，如： 生成item之后，我们考虑将这些数据持久化，保存到关系型数据库mysql中，这可以通过scrapy提供的pipline轻松完成，如： 爬取结果 将文章爬取的封面图保存到了article_spider\images\full下，如： 将爬取到的文章内容保存到了mysql关系型数据库中，如：]]></content>
